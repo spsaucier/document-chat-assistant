@@ -93,7 +93,7 @@ export const EditorContent: React.FC<EditorContentProps> = ({
           style={{
             fontSize: '14px',
             lineHeight: '1.6',
-            fontFamily: 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+            fontFamily: '"Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
             zIndex: 1,
           }}
         >
@@ -117,7 +117,7 @@ You can:
             minHeight: '100%',
             fontSize: '14px',
             lineHeight: '1.6',
-            fontFamily: 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+            fontFamily: '"Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
           }}
           renderElement={renderElement}
           renderLeaf={renderLeaf}
