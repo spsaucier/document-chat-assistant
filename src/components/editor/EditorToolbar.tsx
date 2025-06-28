@@ -153,6 +153,12 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = ({
       }
     }, 100);
     
+    // Ensure editor has a valid selection before focusing
+    if (!editor.selection) {
+      // Set selection to the start of the document if no selection exists
+      Transforms.select(editor, Editor.start(editor, []));
+    }
+    
     ReactEditor.focus(editor);
   };
 
