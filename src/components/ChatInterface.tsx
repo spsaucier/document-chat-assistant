@@ -110,7 +110,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
           ) : (
             <div className="flex flex-col min-h-full">
               {/* Spacer to push messages to bottom when there are few messages */}
-              <div className="flex-1 min-h-0 h-[calc(100vh-2rem)]"></div>
+              <div className="flex-1 min-h-0" style={{ height: 'calc(100% - 3rem)' }}></div>
               
               <div className="space-y-6">
                 {messages.map((message) => (
