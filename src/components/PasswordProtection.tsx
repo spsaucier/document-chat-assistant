@@ -108,15 +108,6 @@ export const PasswordProtection: React.FC<PasswordProtectionProps> = ({ onAuthen
               )}
             </button>
           </form>
-
-          {/* Demo hint */}
-          <div className="mt-6 pt-6 border-t border-gray-100">
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-              <p className="text-xs text-blue-700">
-                <strong>Demo Password:</strong> document2024
-              </p>
-            </div>
-          </div>
         </div>
 
         {/* Footer */}
