@@ -84,7 +84,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
   return (
     <div className="h-full flex flex-col bg-white" data-chat-interface>
       {/* Messages Container - Use flex-1 to take remaining space */}
-      <div className="flex-1 min-h-0 overflow-hidden">
+      <div className="flex-1 min-h-0 overflow-hidden h-[calc(100vh-2rem)]">
         <div className="h-full overflow-y-auto px-6 py-4">
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-gray-500">
