@@ -85,9 +85,9 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
     <div className="h-full flex flex-col bg-white" data-chat-interface>
       {/* Messages Container - Use flex-1 to take remaining space */}
       <div className="flex-1 min-h-0 overflow-hidden">
-        <div className="h-full overflow-y-auto px-6 py-4 flex flex-col">
+        <div className="h-full overflow-y-auto px-6 py-4">
           {messages.length === 0 ? (
-            <div className="flex flex-col items-center justify-end flex-1 text-gray-500 pb-8">
+            <div className="h-full flex flex-col items-center justify-center text-gray-500">
               <MessageSquare className="w-12 h-12 mb-4 opacity-50" />
               <p className="text-center mb-2">Start a conversation with your AI assistant</p>
               <p className="text-sm text-center opacity-75">
@@ -108,7 +108,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
               )}
             </div>
           ) : (
-            <>
+            <div className="flex flex-col min-h-full">
               {/* Spacer to push messages to bottom when there are few messages */}
               <div className="flex-1 min-h-0"></div>
               
@@ -140,9 +140,9 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
                   </div>
                 )}
               </div>
-            </>
+              <div ref={messagesEndRef} />
+            </div>
           )}
-          <div ref={messagesEndRef} />
         </div>
       </div>
 
