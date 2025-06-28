@@ -83,110 +83,112 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
   return (
     <div className="h-full flex flex-col bg-white" data-chat-interface>
-      {/* Messages Container - Takes all available space */}
-      <div className="flex-1 min-h-0 overflow-y-auto p-4">
-        {messages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full text-gray-500">
-            <MessageSquare className="w-12 h-12 mb-4 opacity-50" />
-            <p className="text-center mb-2">Start a conversation with your AI assistant</p>
-            <p className="text-sm text-center opacity-75">
-              Select text in your document to provide context for better assistance
-            </p>
-            {selectedText && (
-              <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                <p className="text-sm text-blue-800 font-medium mb-1">
-                  💡 Try asking about your selected text:
-                </p>
-                <ul className="text-xs text-blue-700 space-y-1">
-                  <li>• "Improve this text"</li>
-                  <li>• "Make this more professional"</li>
-                  <li>• "Fix grammar and style"</li>
-                  <li>• "Rewrite this section"</li>
-                </ul>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {messages.map((message) => (
-              <ChatMessage 
-                key={message.id} 
-                message={message} 
-                onApplyChanges={handleApplyChanges}
-                isApplyingChanges={applyingChanges}
-              />
-            ))}
-            
-            {/* Loading indicator */}
-            {isLoading && (
-              <div className="flex items-center space-x-3">
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center">
-                  <Loader2 className="w-4 h-4 animate-spin" />
+      {/* Messages Container - Use flex-1 to take remaining space */}
+      <div className="flex-1 min-h-0 flex flex-col">
+        <div className="flex-1 overflow-y-auto p-4">
+          {messages.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-full text-gray-500">
+              <MessageSquare className="w-12 h-12 mb-4 opacity-50" />
+              <p className="text-center mb-2">Start a conversation with your AI assistant</p>
+              <p className="text-sm text-center opacity-75">
+                Select text in your document to provide context for better assistance
+              </p>
+              {selectedText && (
+                <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                  <p className="text-sm text-blue-800 font-medium mb-1">
+                    💡 Try asking about your selected text:
+                  </p>
+                  <ul className="text-xs text-blue-700 space-y-1">
+                    <li>• "Improve this text"</li>
+                    <li>• "Make this more professional"</li>
+                    <li>• "Fix grammar and style"</li>
+                    <li>• "Rewrite this section"</li>
+                  </ul>
                 </div>
-                <div className="flex-1">
-                  <div className="inline-block bg-gray-100 text-gray-600 p-3 rounded-lg">
-                    <div className="flex items-center space-x-2">
-                      <div className="animate-pulse">
-                        {selectedText ? 'Analyzing selected text...' : 'Thinking...'}
+              )}
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {messages.map((message) => (
+                <ChatMessage 
+                  key={message.id} 
+                  message={message} 
+                  onApplyChanges={handleApplyChanges}
+                  isApplyingChanges={applyingChanges}
+                />
+              ))}
+              
+              {/* Loading indicator */}
+              {isLoading && (
+                <div className="flex items-center space-x-3">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center">
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="inline-block bg-gray-100 text-gray-600 p-3 rounded-lg">
+                      <div className="flex items-center space-x-2">
+                        <div className="animate-pulse">
+                          {selectedText ? 'Analyzing selected text...' : 'Thinking...'}
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
-          </div>
-        )}
-        <div ref={messagesEndRef} />
+              )}
+            </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
       </div>
 
-      {/* Fixed Bottom Section */}
-      <div className="flex-shrink-0 border-t border-gray-200 bg-white">
-        {/* Error message */}
-        {error && (
-          <div className="mx-4 mt-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center justify-between">
-            <div className="flex items-center space-x-2 text-red-700">
-              <AlertCircle className="w-4 h-4" />
-              <span className="text-sm">{error}</span>
-            </div>
-            <button
-              onClick={onClearError}
-              className="text-red-500 hover:text-red-700 text-sm"
+      {/* Error message - Fixed position above input */}
+      {error && (
+        <div className="flex-shrink-0 mx-4 mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center justify-between">
+          <div className="flex items-center space-x-2 text-red-700">
+            <AlertCircle className="w-4 h-4" />
+            <span className="text-sm">{error}</span>
+          </div>
+          <button
+            onClick={onClearError}
+            className="text-red-500 hover:text-red-700 text-sm"
+          >
+            Dismiss
+          </button>
+        </div>
+      )}
+
+      {/* Selected Text Preview - Fixed position above input */}
+      {selectedPlainText && (
+        <div className="flex-shrink-0 mx-4 mb-3">
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+            <div className="text-xs font-medium text-blue-800 mb-2">Selected text context:</div>
+            <div 
+              className="text-sm text-blue-700 relative overflow-hidden"
+              style={{ 
+                maxHeight: '4.5rem', // ~3 lines at 1.5rem line-height
+                lineHeight: '1.5rem'
+              }}
             >
-              Dismiss
-            </button>
-          </div>
-        )}
-
-        {/* Selected Text Preview */}
-        {selectedPlainText && (
-          <div className="mx-4 mt-4">
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-              <div className="text-xs font-medium text-blue-800 mb-2">Selected text context:</div>
-              <div 
-                className="text-sm text-blue-700 relative overflow-hidden"
-                style={{ 
-                  maxHeight: '4.5rem', // ~3 lines at 1.5rem line-height
-                  lineHeight: '1.5rem'
-                }}
-              >
-                <div className="whitespace-pre-wrap break-words">
-                  {selectedPlainText}
-                </div>
-                {/* Fade to white at bottom if content overflows */}
-                <div 
-                  className="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-blue-50 to-transparent pointer-events-none"
-                  style={{
-                    display: selectedPlainText.length > 150 ? 'block' : 'none' // Show fade for longer text
-                  }}
-                />
+              <div className="whitespace-pre-wrap break-words">
+                {selectedPlainText}
               </div>
+              {/* Fade to white at bottom if content overflows */}
+              <div 
+                className="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-t from-blue-50 to-transparent pointer-events-none"
+                style={{
+                  display: selectedPlainText.length > 150 ? 'block' : 'none' // Show fade for longer text
+                }}
+              />
             </div>
           </div>
-        )}
+        </div>
+      )}
 
+      {/* Input Section - Fixed at bottom with proper spacing */}
+      <div className="flex-shrink-0 border-t border-gray-200 bg-white">
         {/* Mobile clear button */}
         {isMobile && messages.length > 0 && (
-          <div className="px-4 pt-4 flex justify-end">
+          <div className="px-4 pt-3 pb-0 flex justify-end">
             <button
               onClick={onClearMessages}
               className="text-sm text-gray-500 hover:text-red-500 transition-colors flex items-center space-x-1"
@@ -199,14 +201,14 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
         {/* Hint text - moved above input */}
         {selectedText && (
-          <div className="px-4 pt-4">
+          <div className="px-4 pt-3 pb-0">
             <p className="text-xs text-gray-500">
               💡 Try: "Improve this", "Fix grammar", "Make it more professional"
             </p>
           </div>
         )}
         
-        {/* Input form - at the very bottom */}
+        {/* Input form - properly spaced */}
         <div className="p-4">
           <form onSubmit={handleSubmit} className="flex items-end space-x-2">
             <div className="flex-1">
