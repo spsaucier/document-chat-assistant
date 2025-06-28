@@ -179,7 +179,7 @@ function App() {
         <ToastContainer toasts={toast.toasts} onClose={toast.removeToast} />
 
         {/* Main Content Container - Full screen with small margin */}
-        <div className="w-full h-full max-w-[1800px] mx-auto flex bg-white/95 backdrop-blur-sm shadow-xl overflow-hidden" style={{ margin: '8px auto', width: 'calc(100% - 32px)', height: 'calc(100% - 32px)' }}>
+        <div className="w-full h-full max-w-[1800px] mx-auto flex bg-white/95 backdrop-blur-sm shadow-xl overflow-hidden" style={{ margin: '16px auto', width: 'calc(100% - 32px)', height: 'calc(100% - 32px)' }}>
           {/* Slate Editor - Takes up 2/3 on desktop, full width on mobile */}
           <div className={`bg-white shadow-sm border-r border-gray-200 overflow-hidden transition-opacity duration-200 ${
             isMobileChatOpen ? 'lg:flex-[2] opacity-30 lg:opacity-100' : 'lg:flex-[2] flex-1'
