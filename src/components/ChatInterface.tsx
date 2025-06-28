@@ -83,60 +83,62 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
   return (
     <div className="h-full flex flex-col bg-white" data-chat-interface>
-      {/* Messages Container - Takes remaining space */}
-      <div className="flex-1 min-h-0 overflow-y-auto p-4">
-        {messages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full text-gray-500">
-            <MessageSquare className="w-12 h-12 mb-4 opacity-50" />
-            <p className="text-center mb-2">Start a conversation with your AI assistant</p>
-            <p className="text-sm text-center opacity-75">
-              Select text in your document to provide context for better assistance
-            </p>
-            {selectedText && (
-              <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                <p className="text-sm text-blue-800 font-medium mb-1">
-                  💡 Try asking about your selected text:
-                </p>
-                <ul className="text-xs text-blue-700 space-y-1">
-                  <li>• "Improve this text"</li>
-                  <li>• "Make this more professional"</li>
-                  <li>• "Fix grammar and style"</li>
-                  <li>• "Rewrite this section"</li>
-                </ul>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {messages.map((message) => (
-              <ChatMessage 
-                key={message.id} 
-                message={message} 
-                onApplyChanges={handleApplyChanges}
-                isApplyingChanges={applyingChanges}
-              />
-            ))}
-            
-            {/* Loading indicator */}
-            {isLoading && (
-              <div className="flex items-center space-x-3">
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center">
-                  <Loader2 className="w-4 h-4 animate-spin" />
+      {/* Messages Container - Use flex-1 to take remaining space */}
+      <div className="flex-1 min-h-0 flex flex-col">
+        <div className="flex-1 overflow-y-auto p-4">
+          {messages.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-full text-gray-500">
+              <MessageSquare className="w-12 h-12 mb-4 opacity-50" />
+              <p className="text-center mb-2">Start a conversation with your AI assistant</p>
+              <p className="text-sm text-center opacity-75">
+                Select text in your document to provide context for better assistance
+              </p>
+              {selectedText && (
+                <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                  <p className="text-sm text-blue-800 font-medium mb-1">
+                    💡 Try asking about your selected text:
+                  </p>
+                  <ul className="text-xs text-blue-700 space-y-1">
+                    <li>• "Improve this text"</li>
+                    <li>• "Make this more professional"</li>
+                    <li>• "Fix grammar and style"</li>
+                    <li>• "Rewrite this section"</li>
+                  </ul>
                 </div>
-                <div className="flex-1">
-                  <div className="inline-block bg-gray-100 text-gray-600 p-3 rounded-lg">
-                    <div className="flex items-center space-x-2">
-                      <div className="animate-pulse">
-                        {selectedText ? 'Analyzing selected text...' : 'Thinking...'}
+              )}
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {messages.map((message) => (
+                <ChatMessage 
+                  key={message.id} 
+                  message={message} 
+                  onApplyChanges={handleApplyChanges}
+                  isApplyingChanges={applyingChanges}
+                />
+              ))}
+              
+              {/* Loading indicator */}
+              {isLoading && (
+                <div className="flex items-center space-x-3">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center">
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="inline-block bg-gray-100 text-gray-600 p-3 rounded-lg">
+                      <div className="flex items-center space-x-2">
+                        <div className="animate-pulse">
+                          {selectedText ? 'Analyzing selected text...' : 'Thinking...'}
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
-          </div>
-        )}
-        <div ref={messagesEndRef} />
+              )}
+            </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
       </div>
 
       {/* Error message - Fixed position above input */}
