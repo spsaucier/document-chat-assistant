@@ -219,7 +219,6 @@ export const SlateEditor: React.FC<SlateEditorProps> = ({
       <EditorHeader
         wordCount={wordCount}
         charCount={charCount}
-        hasSelection={hasSelection}
         selectedText={selectedText}
         onToggleMobileChat={onToggleMobileChat}
       />
