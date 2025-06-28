@@ -159,7 +159,7 @@ function App() {
   };
 
   return (
-    <div className="h-screen flex relative">
+    <div className="h-screen flex flex-col relative">
       {/* Background with sunset gradient fallback */}
       <div 
         className="absolute inset-0 bg-gradient-to-br from-orange-400 via-pink-500 to-purple-600"
@@ -173,13 +173,13 @@ function App() {
         }}
       />
       
-      {/* Content overlay */}
-      <div className="relative z-10 w-full">
+      {/* Content overlay - Full height flex container */}
+      <div className="relative z-10 flex-1 flex flex-col p-4">
         {/* Toast Container */}
         <ToastContainer toasts={toast.toasts} onClose={toast.removeToast} />
 
-        {/* Main Content Container with Max Width */}
-        <div className="w-full max-w-[1800px] mx-auto flex bg-white/95 backdrop-blur-sm shadow-xl rounded-lg m-4 overflow-hidden h-[calc(100vh-2rem)]">
+        {/* Main Content Container with Max Width - Flex container */}
+        <div className="flex-1 w-full max-w-[1800px] mx-auto flex bg-white/95 backdrop-blur-sm shadow-xl rounded-lg overflow-hidden">
           {/* Slate Editor - Takes up 2/3 on desktop, full width on mobile */}
           <div className={`bg-white shadow-sm border-r border-gray-200 overflow-hidden transition-opacity duration-200 ${
             isMobileChatOpen ? 'lg:flex-[2] opacity-30 lg:opacity-100' : 'lg:flex-[2] flex-1'
