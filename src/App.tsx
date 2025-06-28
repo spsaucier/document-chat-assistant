@@ -86,7 +86,7 @@ function App() {
         <div 
           className="absolute inset-0 bg-gradient-to-br from-orange-400 via-pink-500 to-purple-600"
           style={{
-            backgroundImage: 'url(/images/bg.jpg), linear-gradient(135deg, #fb923c 0%, #ec4899 50%, #9333ea 100%)',
+            backgroundImage: 'url(/images/bg.jpg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
@@ -164,7 +164,7 @@ function App() {
       <div 
         className="absolute inset-0 bg-gradient-to-br from-orange-400 via-pink-500 to-purple-600"
         style={{
-          backgroundImage: 'url(/images/bg.jpg), linear-gradient(135deg, #fb923c 0%, #ec4899 50%, #9333ea 100%)',
+          backgroundImage: 'url(/images/bg.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
