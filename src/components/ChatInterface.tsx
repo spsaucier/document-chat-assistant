@@ -82,6 +82,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
   const selectedPlainText = selectedText ? extractPlainText(selectedText) : '';
 
   return (
+            <div className="flex-1 min-h-0">
     <div className="h-full flex flex-col bg-white" data-chat-interface>
       {/* Messages Container - Use flex-1 to take remaining space */}
       <div className="flex-1 min-h-0 overflow-hidden" style={{ height: 'calc(100% - 3rem)' }}>
@@ -249,5 +250,6 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
         </div>
       </div>
     </div>
+            </div>
   );
 };
