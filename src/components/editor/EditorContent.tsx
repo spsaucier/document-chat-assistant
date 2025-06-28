@@ -93,7 +93,6 @@ export const EditorContent: React.FC<EditorContentProps> = ({
           style={{
             fontSize: '14px',
             lineHeight: '1.6',
-            fontFamily: '"Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
             zIndex: 1,
           }}
         >
