@@ -85,9 +85,9 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
     <div className="h-full flex flex-col bg-white" data-chat-interface>
       {/* Messages Container - Use flex-1 to take remaining space */}
       <div className="flex-1 min-h-0 overflow-hidden">
-        <div className="h-full overflow-y-auto p-4">
+        <div className="h-full overflow-y-auto px-6 py-4">
           {messages.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full text-gray-500">
+            <div className="flex flex-col items-center justify-end h-full text-gray-500 pb-8">
               <MessageSquare className="w-12 h-12 mb-4 opacity-50" />
               <p className="text-center mb-2">Start a conversation with your AI assistant</p>
               <p className="text-sm text-center opacity-75">
@@ -108,7 +108,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
               )}
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-6">
               {messages.map((message) => (
                 <ChatMessage 
                   key={message.id} 
@@ -143,7 +143,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
       {/* Error message - Fixed position above input */}
       {error && (
-        <div className="flex-shrink-0 mx-4 mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center justify-between">
+        <div className="flex-shrink-0 mx-6 mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center justify-between">
           <div className="flex items-center space-x-2 text-red-700">
             <AlertCircle className="w-4 h-4" />
             <span className="text-sm">{error}</span>
@@ -159,7 +159,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
       {/* Selected Text Preview - Fixed position above input */}
       {selectedPlainText && (
-        <div className="flex-shrink-0 mx-4 mb-3">
+        <div className="flex-shrink-0 mx-6 mb-3">
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
             <div className="text-xs font-medium text-blue-800 mb-2">Selected text context:</div>
             <div 
@@ -188,7 +188,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
       <div className="flex-shrink-0 border-t border-gray-200 bg-white">
         {/* Mobile clear button */}
         {isMobile && messages.length > 0 && (
-          <div className="px-4 pt-3 pb-0 flex justify-end">
+          <div className="px-6 pt-3 pb-0 flex justify-end">
             <button
               onClick={onClearMessages}
               className="text-sm text-gray-500 hover:text-red-500 transition-colors flex items-center space-x-1"
@@ -201,7 +201,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
         {/* Hint text - moved above input */}
         {selectedText && (
-          <div className="px-4 pt-3 pb-0">
+          <div className="px-6 pt-3 pb-0">
             <p className="text-xs text-gray-500">
               💡 Try: "Improve this", "Fix grammar", "Make it more professional"
             </p>
@@ -209,8 +209,8 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
         )}
         
         {/* Input form - properly spaced */}
-        <div className="p-4">
-          <form onSubmit={handleSubmit} className="flex space-x-2">
+        <div className="p-6">
+          <form onSubmit={handleSubmit} className="flex space-x-3">
             <div className="flex-1">
               <textarea
                 ref={inputRef}
@@ -218,7 +218,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder={selectedText ? "Ask about the selected text or request changes..." : "Ask your AI assistant anything..."}
-                className="w-full px-3 py-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                 style={{ 
                   minHeight: '60px',
                   maxHeight: '120px',
