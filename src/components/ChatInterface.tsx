@@ -171,11 +171,11 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
           </div>
         )}
 
-        {/* Input */}
-        <div className="flex-shrink-0 p-4 border-t border-gray-200">
+        {/* Input Section - Fixed at bottom */}
+        <div className="flex-shrink-0 border-t border-gray-200 bg-white">
           {/* Mobile clear button */}
           {isMobile && messages.length > 0 && (
-            <div className="mb-3 flex justify-end">
+            <div className="p-4 pb-0 flex justify-end">
               <button
                 onClick={onClearMessages}
                 className="text-sm text-gray-500 hover:text-red-500 transition-colors flex items-center space-x-1"
@@ -185,37 +185,44 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
               </button>
             </div>
           )}
-          
-          <form onSubmit={handleSubmit} className="flex space-x-2">
-            <div className="flex-1">
-              <textarea
-                ref={inputRef}
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder={selectedText ? "Ask about the selected text or request changes..." : "Ask your AI assistant anything..."}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                rows={isMobile ? 2 : 1}
-                disabled={isLoading || applyingChanges}
-              />
-              {selectedText && (
-                <p className="text-xs text-gray-500 mt-1">
-                  💡 Try: "Improve this", "Fix grammar", "Make it more professional"
-                </p>
-              )}
+
+          {/* Hint text - moved above input */}
+          {selectedText && (
+            <div className="px-4 pt-3 pb-0">
+              <p className="text-xs text-gray-500">
+                💡 Try: "Improve this", "Fix grammar", "Make it more professional"
+              </p>
             </div>
-            <button
-              type="submit"
-              disabled={!inputValue.trim() || isLoading || applyingChanges}
-              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-1"
-            >
-              {isLoading || applyingChanges ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <Send className="w-4 h-4" />
-              )}
-            </button>
-          </form>
+          )}
+          
+          {/* Input form */}
+          <div className="p-4">
+            <form onSubmit={handleSubmit} className="flex space-x-2">
+              <div className="flex-1">
+                <textarea
+                  ref={inputRef}
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder={selectedText ? "Ask about the selected text or request changes..." : "Ask your AI assistant anything..."}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  rows={isMobile ? 2 : 1}
+                  disabled={isLoading || applyingChanges}
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={!inputValue.trim() || isLoading || applyingChanges}
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-1"
+              >
+                {isLoading || applyingChanges ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Send className="w-4 h-4" />
+                )}
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>

@@ -23,7 +23,8 @@ export const EditorHeader: React.FC<EditorHeaderProps> = ({
         <h2 className="font-semibold text-gray-800">Document Chat Assistant</h2>
       </div>
       <div className="flex items-center space-x-4">
-        <div className="text-sm text-gray-500 flex items-center space-x-1">
+        {/* Hide word count on mobile */}
+        <div className="hidden md:flex text-sm text-gray-500 items-center space-x-1">
           <Type className="w-4 h-4" />
           <span>{wordCount} words, {charCount} chars</span>
         </div>
