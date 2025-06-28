@@ -85,9 +85,9 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
     <div className="h-full flex flex-col bg-white" data-chat-interface>
       {/* Messages Container - Use flex-1 to take remaining space */}
       <div className="flex-1 min-h-0 overflow-hidden">
-        <div className="h-full overflow-y-auto px-6 py-4">
+        <div className="h-full overflow-y-auto px-6 py-4 flex flex-col">
           {messages.length === 0 ? (
-            <div className="flex flex-col items-center justify-end h-full text-gray-500 pb-8">
+            <div className="flex flex-col items-center justify-end flex-1 text-gray-500 pb-8">
               <MessageSquare className="w-12 h-12 mb-4 opacity-50" />
               <p className="text-center mb-2">Start a conversation with your AI assistant</p>
               <p className="text-sm text-center opacity-75">
@@ -108,34 +108,39 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
               )}
             </div>
           ) : (
-            <div className="space-y-6">
-              {messages.map((message) => (
-                <ChatMessage 
-                  key={message.id} 
-                  message={message} 
-                  onApplyChanges={handleApplyChanges}
-                  isApplyingChanges={applyingChanges}
-                />
-              ))}
+            <>
+              {/* Spacer to push messages to bottom when there are few messages */}
+              <div className="flex-1 min-h-0"></div>
               
-              {/* Loading indicator */}
-              {isLoading && (
-                <div className="flex items-center space-x-3">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center">
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="inline-block bg-gray-100 text-gray-600 p-3 rounded-lg">
-                      <div className="flex items-center space-x-2">
-                        <div className="animate-pulse">
-                          {selectedText ? 'Analyzing selected text...' : 'Thinking...'}
+              <div className="space-y-6">
+                {messages.map((message) => (
+                  <ChatMessage 
+                    key={message.id} 
+                    message={message} 
+                    onApplyChanges={handleApplyChanges}
+                    isApplyingChanges={applyingChanges}
+                  />
+                ))}
+                
+                {/* Loading indicator */}
+                {isLoading && (
+                  <div className="flex items-center space-x-3">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center">
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="inline-block bg-gray-100 text-gray-600 p-3 rounded-lg">
+                        <div className="flex items-center space-x-2">
+                          <div className="animate-pulse">
+                            {selectedText ? 'Analyzing selected text...' : 'Thinking...'}
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+            </>
           )}
           <div ref={messagesEndRef} />
         </div>
