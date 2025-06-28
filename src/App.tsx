@@ -149,58 +149,61 @@ function App() {
       {/* Toast Container */}
       <ToastContainer toasts={toast.toasts} onClose={toast.removeToast} />
 
-      {/* Slate Editor - Takes up 2/3 on desktop, full width on mobile */}
-      <div className={`bg-white shadow-sm border-r border-gray-200 overflow-hidden transition-opacity duration-200 ${
-        isMobileChatOpen ? 'lg:flex-[2] opacity-30 lg:opacity-100' : 'lg:flex-[2] flex-1'
-      }`}>
-        <SlateEditor
-          content={document.content}
-          selection={document.selection}
-          onContentChange={document.updateContent}
-          onSelectionChange={document.updateSelection}
-          hasSelection={!!document.selection}
-          onToggleMobileChat={toggleMobileChat}
-          selectedText={document.selection?.text ? extractPlainText(document.selection.text) : undefined}
-          onReplaceContent={handleEditorReplaceRef}
-        />
-      </div>
-
-      {/* Desktop Chat Interface - Takes up 1/3 max with proper height */}
-      <div className="hidden lg:flex lg:flex-col lg:flex-1 lg:max-w-md bg-white shadow-sm">
-        {/* Chat Header with Logout */}
-        <div className="flex-shrink-0 flex items-center justify-between p-4 border-b border-gray-200 bg-gray-50">
-          <div className="flex items-center space-x-2">
-            <MessageSquare className="w-5 h-5 text-gray-600" />
-            <h2 className="font-semibold text-gray-800">AI Assistant</h2>
-          </div>
-          <div className="flex items-center space-x-2">
-            {document.selection?.text && (
-              <div className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full border border-blue-200">
-                Text selected
-              </div>
-            )}
-            <button
-              onClick={handleLogout}
-              className="p-1 text-gray-500 hover:text-red-500 transition-colors"
-              title="Logout"
-            >
-              <LogOut className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-        
-        {/* Chat Interface - Takes remaining height */}
-        <div className="flex-1 min-h-0">
-          <ChatInterface
-            messages={chat.messages}
-            isLoading={chat.isLoading}
-            error={chat.error}
+      {/* Main Content Container with Max Width */}
+      <div className="w-full max-w-[1800px] mx-auto flex bg-white shadow-lg">
+        {/* Slate Editor - Takes up 2/3 on desktop, full width on mobile */}
+        <div className={`bg-white shadow-sm border-r border-gray-200 overflow-hidden transition-opacity duration-200 ${
+          isMobileChatOpen ? 'lg:flex-[2] opacity-30 lg:opacity-100' : 'lg:flex-[2] flex-1'
+        }`}>
+          <SlateEditor
+            content={document.content}
+            selection={document.selection}
+            onContentChange={document.updateContent}
+            onSelectionChange={document.updateSelection}
+            hasSelection={!!document.selection}
+            onToggleMobileChat={toggleMobileChat}
             selectedText={document.selection?.text ? extractPlainText(document.selection.text) : undefined}
-            onSendMessage={handleSendMessage}
-            onApplyChanges={handleApplyChanges}
-            onClearMessages={chat.clearMessages}
-            onClearError={chat.clearError}
+            onReplaceContent={handleEditorReplaceRef}
           />
+        </div>
+
+        {/* Desktop Chat Interface - Takes up 1/3 max */}
+        <div className="hidden lg:flex lg:flex-col lg:flex-1 lg:max-w-md bg-white shadow-sm">
+          {/* Chat Header with Logout */}
+          <div className="flex-shrink-0 flex items-center justify-between p-4 border-b border-gray-200 bg-gray-50">
+            <div className="flex items-center space-x-2">
+              <MessageSquare className="w-5 h-5 text-gray-600" />
+              <h2 className="font-semibold text-gray-800">AI Assistant</h2>
+            </div>
+            <div className="flex items-center space-x-2">
+              {document.selection?.text && (
+                <div className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full border border-blue-200">
+                  Text selected
+                </div>
+              )}
+              <button
+                onClick={handleLogout}
+                className="p-1 text-gray-500 hover:text-red-500 transition-colors"
+                title="Logout"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+          
+          {/* Chat Interface - Takes remaining height */}
+          <div className="flex-1 min-h-0">
+            <ChatInterface
+              messages={chat.messages}
+              isLoading={chat.isLoading}
+              error={chat.error}
+              selectedText={document.selection?.text ? extractPlainText(document.selection.text) : undefined}
+              onSendMessage={handleSendMessage}
+              onApplyChanges={handleApplyChanges}
+              onClearMessages={chat.clearMessages}
+              onClearError={chat.clearError}
+            />
+          </div>
         </div>
       </div>
 
