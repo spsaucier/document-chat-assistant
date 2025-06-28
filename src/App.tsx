@@ -173,12 +173,12 @@ function App() {
         }}
       />
       
-      {/* Content overlay - Constrained container */}
+      {/* Content overlay - Constrained container with proper viewport height */}
       <div className="relative z-10 w-full h-full p-4 overflow-hidden">
         {/* Toast Container */}
         <ToastContainer toasts={toast.toasts} onClose={toast.removeToast} />
 
-        {/* Main Content Container - Properly constrained */}
+        {/* Main Content Container - Properly constrained with calc height */}
         <div className="w-full h-[calc(100vh-2rem)] max-w-[1800px] mx-auto flex bg-white/95 backdrop-blur-sm shadow-xl rounded-lg overflow-hidden">
           {/* Slate Editor - Takes up 2/3 on desktop, full width on mobile */}
           <div className={`bg-white shadow-sm border-r border-gray-200 overflow-hidden transition-opacity duration-200 ${
