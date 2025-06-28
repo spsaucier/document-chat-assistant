@@ -2,11 +2,13 @@ import React, { useState, useRef } from 'react';
 import { SlateEditor } from './components/SlateEditor';
 import { ChatInterface } from './components/ChatInterface';
 import { ToastContainer } from './components/Toast';
+import { PasswordProtection } from './components/PasswordProtection';
 import { useDocument } from './hooks/useDocument';
 import { useChat } from './hooks/useChat';
 import { useToast } from './hooks/useToast';
+import { useAuth } from './hooks/useAuth';
 import { extractPlainText, SuggestedChanges } from './types';
-import { MessageSquare, X } from 'lucide-react';
+import { MessageSquare, X, LogOut } from 'lucide-react';
 
 const INITIAL_CONTENT = `<h1>Welcome to Your Document Chat Assistant</h1>
 
@@ -67,6 +69,7 @@ const INITIAL_CONTENT = `<h1>Welcome to Your Document Chat Assistant</h1>
 <p><em>The AI assistant is ready to help you create, edit, and improve your documents with intelligent suggestions and real-time feedback.</em></p>`;
 
 function App() {
+  const { isAuthenticated, isLoading, authenticate, logout } = useAuth();
   const document = useDocument(INITIAL_CONTENT);
   const chat = useChat();
   const toast = useToast();
@@ -74,6 +77,23 @@ function App() {
   
   // Create a ref to store the editor's replace function
   const editorReplaceRef = useRef<((newHtml: string) => void) | null>(null);
+
+  // Show loading screen while checking authentication
+  if (isLoading) {
+    return (
+      <div className="h-screen bg-gray-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show password protection if not authenticated
+  if (!isAuthenticated) {
+    return <PasswordProtection onAuthenticated={authenticate} />;
+  }
 
   const handleSendMessage = (message: string) => {
     // Pass the raw HTML selectedText to maintain formatting context
@@ -116,6 +136,14 @@ function App() {
     setIsMobileChatOpen(!isMobileChatOpen);
   };
 
+  const handleLogout = () => {
+    logout();
+    // Clear any sensitive data
+    chat.clearMessages();
+    document.forceUpdateContent(INITIAL_CONTENT);
+    toast.showSuccess('Logged out successfully');
+  };
+
   return (
     <div className="h-screen bg-gray-100 flex">
       {/* Toast Container */}
@@ -139,16 +167,40 @@ function App() {
 
       {/* Desktop Chat Interface - Takes up 1/3 max */}
       <div className="hidden lg:block lg:flex-1 lg:max-w-md bg-white shadow-sm overflow-hidden">
-        <ChatInterface
-          messages={chat.messages}
-          isLoading={chat.isLoading}
-          error={chat.error}
-          selectedText={document.selection?.text ? extractPlainText(document.selection.text) : undefined}
-          onSendMessage={handleSendMessage}
-          onApplyChanges={handleApplyChanges}
-          onClearMessages={chat.clearMessages}
-          onClearError={chat.clearError}
-        />
+        {/* Chat Header with Logout */}
+        <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gray-50">
+          <div className="flex items-center space-x-2">
+            <MessageSquare className="w-5 h-5 text-gray-600" />
+            <h2 className="font-semibold text-gray-800">AI Assistant</h2>
+          </div>
+          <div className="flex items-center space-x-2">
+            {document.selection?.text && (
+              <div className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full border border-blue-200">
+                Text selected
+              </div>
+            )}
+            <button
+              onClick={handleLogout}
+              className="p-1 text-gray-500 hover:text-red-500 transition-colors"
+              title="Logout"
+            >
+              <LogOut className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+        
+        <div className="flex-1 min-h-0">
+          <ChatInterface
+            messages={chat.messages}
+            isLoading={chat.isLoading}
+            error={chat.error}
+            selectedText={document.selection?.text ? extractPlainText(document.selection.text) : undefined}
+            onSendMessage={handleSendMessage}
+            onApplyChanges={handleApplyChanges}
+            onClearMessages={chat.clearMessages}
+            onClearError={chat.clearError}
+          />
+        </div>
       </div>
 
       {/* Mobile Chat Popover */}
@@ -173,12 +225,21 @@ function App() {
                   </div>
                 )}
               </div>
-              <button
-                onClick={toggleMobileChat}
-                className="p-1 text-gray-500 hover:text-gray-700 transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={handleLogout}
+                  className="p-1 text-gray-500 hover:text-red-500 transition-colors"
+                  title="Logout"
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={toggleMobileChat}
+                  className="p-1 text-gray-500 hover:text-gray-700 transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
             </div>
             
             {/* Chat Content */}

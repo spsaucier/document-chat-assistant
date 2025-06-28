@@ -10,7 +10,7 @@ interface ChatInterfaceProps {
   error: string | null;
   selectedText?: string;
   onSendMessage: (message: string) => void;
-  onApplyChanges: (suggestedChanges: SuggestedChanges, messageId: string) => Promise<void>; // Updated signature
+  onApplyChanges: (suggestedChanges: SuggestedChanges, messageId: string) => Promise<void>;
   onClearMessages: () => void;
   onClearError: () => void;
   isMobile?: boolean;
@@ -71,32 +71,6 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
   return (
     <div className="h-full flex flex-col bg-white" data-chat-interface>
-      {/* Header - Only show on desktop, mobile has its own header */}
-      {!isMobile && (
-        <div className="flex-shrink-0 flex items-center justify-between p-4 border-b border-gray-200 bg-gray-50">
-          <div className="flex items-center space-x-2">
-            <MessageSquare className="w-5 h-5 text-gray-600" />
-            <h2 className="font-semibold text-gray-800">AI Assistant</h2>
-          </div>
-          <div className="flex items-center space-x-2">
-            {selectedText && (
-              <div className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full border border-blue-200">
-                Text selected
-              </div>
-            )}
-            {messages.length > 0 && (
-              <button
-                onClick={onClearMessages}
-                className="p-1 text-gray-500 hover:text-red-500 transition-colors"
-                title="Clear chat history"
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
-            )}
-          </div>
-        </div>
-      )}
-
       {/* Messages Container */}
       <div className="flex-1 min-h-0 flex flex-col">
         <div className="flex-1 overflow-y-auto p-4">
