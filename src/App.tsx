@@ -220,18 +220,16 @@ function App() {
               </div>
             </div>
             
-            <div className="flex-1 min-h-0">
-              <ChatInterface
-                messages={chat.messages}
-                isLoading={chat.isLoading}
-                error={chat.error}
-                selectedText={document.selection?.text ? extractPlainText(document.selection.text) : undefined}
-                onSendMessage={handleSendMessage}
-                onApplyChanges={handleApplyChanges}
-                onClearMessages={chat.clearMessages}
-                onClearError={chat.clearError}
-              />
-            </div>
+            <ChatInterface
+              messages={chat.messages}
+              isLoading={chat.isLoading}
+              error={chat.error}
+              selectedText={document.selection?.text ? extractPlainText(document.selection.text) : undefined}
+              onSendMessage={handleSendMessage}
+              onApplyChanges={handleApplyChanges}
+              onClearMessages={chat.clearMessages}
+              onClearError={chat.clearError}
+            />
           </div>
         </div>
 
