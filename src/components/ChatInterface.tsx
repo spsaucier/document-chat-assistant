@@ -210,7 +210,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
         
         {/* Input form - properly spaced */}
         <div className="p-4">
-          <form onSubmit={handleSubmit} className="flex items-end space-x-2">
+          <form onSubmit={handleSubmit} className="flex space-x-2">
             <div className="flex-1">
               <textarea
                 ref={inputRef}
