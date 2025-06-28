@@ -112,7 +112,7 @@ const ToolbarButton: React.FC<{
   <button
     onClick={onClick}
     disabled={disabled}
-    className={`p-2 rounded transition-colors ${
+    className={`flex-shrink-0 p-2 rounded transition-colors ${
       isActive
         ? 'text-blue-600 bg-blue-100'
         : disabled
@@ -126,7 +126,7 @@ const ToolbarButton: React.FC<{
 );
 
 const ToolbarSeparator: React.FC = () => (
-  <div className="w-px h-6 bg-gray-300 mx-2" />
+  <div className="flex-shrink-0 w-px h-6 bg-gray-300 mx-2" />
 );
 
 export const EditorToolbar: React.FC<EditorToolbarProps> = ({
@@ -148,208 +148,215 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = ({
   return (
     <div className="border-b border-gray-100 bg-white">
       {/* Main Toolbar Row */}
-      <div className="flex items-center justify-between p-2">
-        <div className="flex items-center space-x-1">
-          {/* History */}
-          <ToolbarButton
-            onClick={() => editor.undo()}
-            title="Undo (Ctrl+Z)"
-          >
-            <Undo className="w-4 h-4" />
-          </ToolbarButton>
-          <ToolbarButton
-            onClick={() => editor.redo()}
-            title="Redo (Ctrl+Y)"
-          >
-            <Redo className="w-4 h-4" />
-          </ToolbarButton>
-          
-          <ToolbarSeparator />
-          
-          {/* Headings */}
-          <ToolbarButton
-            onClick={() => handleFormat('heading-one', 'block')}
-            isActive={isBlockActive(editor, 'heading-one')}
-            title="Heading 1"
-          >
-            <Heading1 className="w-4 h-4" />
-          </ToolbarButton>
-          <ToolbarButton
-            onClick={() => handleFormat('heading-two', 'block')}
-            isActive={isBlockActive(editor, 'heading-two')}
-            title="Heading 2"
-          >
-            <Heading2 className="w-4 h-4" />
-          </ToolbarButton>
-          <ToolbarButton
-            onClick={() => handleFormat('heading-three', 'block')}
-            isActive={isBlockActive(editor, 'heading-three')}
-            title="Heading 3"
-          >
-            <Heading3 className="w-4 h-4" />
-          </ToolbarButton>
-          
-          <ToolbarSeparator />
-          
-          {/* Text Formatting */}
-          <ToolbarButton
-            onClick={() => handleFormat('bold', 'mark')}
-            isActive={isMarkActive(editor, 'bold')}
-            title="Bold (Ctrl+B)"
-          >
-            <Bold className="w-4 h-4" />
-          </ToolbarButton>
-          <ToolbarButton
-            onClick={() => handleFormat('italic', 'mark')}
-            isActive={isMarkActive(editor, 'italic')}
-            title="Italic (Ctrl+I)"
-          >
-            <Italic className="w-4 h-4" />
-          </ToolbarButton>
-          <ToolbarButton
-            onClick={() => handleFormat('underline', 'mark')}
-            isActive={isMarkActive(editor, 'underline')}
-            title="Underline (Ctrl+U)"
-          >
-            <Underline className="w-4 h-4" />
-          </ToolbarButton>
-          <ToolbarButton
-            onClick={() => handleFormat('strikethrough', 'mark')}
-            isActive={isMarkActive(editor, 'strikethrough')}
-            title="Strikethrough"
-          >
-            <Strikethrough className="w-4 h-4" />
-          </ToolbarButton>
-          <ToolbarButton
-            onClick={() => handleFormat('code', 'mark')}
-            isActive={isMarkActive(editor, 'code')}
-            title="Inline Code (Ctrl+`)"
-          >
-            <Code className="w-4 h-4" />
-          </ToolbarButton>
-          
-          <ToolbarSeparator />
-          
-          {/* Alignment */}
-          <ToolbarButton
-            onClick={() => handleFormat('left', 'alignment')}
-            isActive={isAlignmentActive(editor, 'left') || (!isAlignmentActive(editor, 'center') && !isAlignmentActive(editor, 'right') && !isAlignmentActive(editor, 'justify'))}
-            title="Align Left"
-          >
-            <AlignLeft className="w-4 h-4" />
-          </ToolbarButton>
-          <ToolbarButton
-            onClick={() => handleFormat('center', 'alignment')}
-            isActive={isAlignmentActive(editor, 'center')}
-            title="Align Center"
-          >
-            <AlignCenter className="w-4 h-4" />
-          </ToolbarButton>
-          <ToolbarButton
-            onClick={() => handleFormat('right', 'alignment')}
-            isActive={isAlignmentActive(editor, 'right')}
-            title="Align Right"
-          >
-            <AlignRight className="w-4 h-4" />
-          </ToolbarButton>
-          <ToolbarButton
-            onClick={() => handleFormat('justify', 'alignment')}
-            isActive={isAlignmentActive(editor, 'justify')}
-            title="Justify"
-          >
-            <AlignJustify className="w-4 h-4" />
-          </ToolbarButton>
-          
-          <ToolbarSeparator />
-          
-          {/* Lists */}
-          <ToolbarButton
-            onClick={() => handleFormat('bulleted-list', 'block')}
-            isActive={isBlockActive(editor, 'bulleted-list')}
-            title="Bullet List"
-          >
-            <List className="w-4 h-4" />
-          </ToolbarButton>
-          <ToolbarButton
-            onClick={() => handleFormat('numbered-list', 'block')}
-            isActive={isBlockActive(editor, 'numbered-list')}
-            title="Numbered List"
-          >
-            <ListOrdered className="w-4 h-4" />
-          </ToolbarButton>
-          
-          <ToolbarSeparator />
-          
-          {/* Block Elements */}
-          <ToolbarButton
-            onClick={() => handleFormat('block-quote', 'block')}
-            isActive={isBlockActive(editor, 'block-quote')}
-            title="Quote"
-          >
-            <Quote className="w-4 h-4" />
-          </ToolbarButton>
-          <ToolbarButton
-            onClick={() => handleFormat('code-block', 'block')}
-            isActive={isBlockActive(editor, 'code-block')}
-            title="Code Block"
-          >
-            <Code className="w-4 h-4" />
-          </ToolbarButton>
-          <ToolbarButton
-            onClick={() => insertDivider(editor)}
-            title="Insert Divider"
-          >
-            <Separator className="w-4 h-4" />
-          </ToolbarButton>
+      <div className="flex items-center justify-between">
+        {/* Scrollable toolbar content */}
+        <div className="flex-1 overflow-x-auto">
+          <div className="flex items-center space-x-1 p-2 min-w-max">
+            {/* History */}
+            <ToolbarButton
+              onClick={() => editor.undo()}
+              title="Undo (Ctrl+Z)"
+            >
+              <Undo className="w-4 h-4" />
+            </ToolbarButton>
+            <ToolbarButton
+              onClick={() => editor.redo()}
+              title="Redo (Ctrl+Y)"
+            >
+              <Redo className="w-4 h-4" />
+            </ToolbarButton>
+            
+            <ToolbarSeparator />
+            
+            {/* Headings */}
+            <ToolbarButton
+              onClick={() => handleFormat('heading-one', 'block')}
+              isActive={isBlockActive(editor, 'heading-one')}
+              title="Heading 1"
+            >
+              <Heading1 className="w-4 h-4" />
+            </ToolbarButton>
+            <ToolbarButton
+              onClick={() => handleFormat('heading-two', 'block')}
+              isActive={isBlockActive(editor, 'heading-two')}
+              title="Heading 2"
+            >
+              <Heading2 className="w-4 h-4" />
+            </ToolbarButton>
+            <ToolbarButton
+              onClick={() => handleFormat('heading-three', 'block')}
+              isActive={isBlockActive(editor, 'heading-three')}
+              title="Heading 3"
+            >
+              <Heading3 className="w-4 h-4" />
+            </ToolbarButton>
+            
+            <ToolbarSeparator />
+            
+            {/* Text Formatting */}
+            <ToolbarButton
+              onClick={() => handleFormat('bold', 'mark')}
+              isActive={isMarkActive(editor, 'bold')}
+              title="Bold (Ctrl+B)"
+            >
+              <Bold className="w-4 h-4" />
+            </ToolbarButton>
+            <ToolbarButton
+              onClick={() => handleFormat('italic', 'mark')}
+              isActive={isMarkActive(editor, 'italic')}
+              title="Italic (Ctrl+I)"
+            >
+              <Italic className="w-4 h-4" />
+            </ToolbarButton>
+            <ToolbarButton
+              onClick={() => handleFormat('underline', 'mark')}
+              isActive={isMarkActive(editor, 'underline')}
+              title="Underline (Ctrl+U)"
+            >
+              <Underline className="w-4 h-4" />
+            </ToolbarButton>
+            <ToolbarButton
+              onClick={() => handleFormat('strikethrough', 'mark')}
+              isActive={isMarkActive(editor, 'strikethrough')}
+              title="Strikethrough"
+            >
+              <Strikethrough className="w-4 h-4" />
+            </ToolbarButton>
+            <ToolbarButton
+              onClick={() => handleFormat('code', 'mark')}
+              isActive={isMarkActive(editor, 'code')}
+              title="Inline Code (Ctrl+`)"
+            >
+              <Code className="w-4 h-4" />
+            </ToolbarButton>
+            
+            <ToolbarSeparator />
+            
+            {/* Alignment */}
+            <ToolbarButton
+              onClick={() => handleFormat('left', 'alignment')}
+              isActive={isAlignmentActive(editor, 'left') || (!isAlignmentActive(editor, 'center') && !isAlignmentActive(editor, 'right') && !isAlignmentActive(editor, 'justify'))}
+              title="Align Left"
+            >
+              <AlignLeft className="w-4 h-4" />
+            </ToolbarButton>
+            <ToolbarButton
+              onClick={() => handleFormat('center', 'alignment')}
+              isActive={isAlignmentActive(editor, 'center')}
+              title="Align Center"
+            >
+              <AlignCenter className="w-4 h-4" />
+            </ToolbarButton>
+            <ToolbarButton
+              onClick={() => handleFormat('right', 'alignment')}
+              isActive={isAlignmentActive(editor, 'right')}
+              title="Align Right"
+            >
+              <AlignRight className="w-4 h-4" />
+            </ToolbarButton>
+            <ToolbarButton
+              onClick={() => handleFormat('justify', 'alignment')}
+              isActive={isAlignmentActive(editor, 'justify')}
+              title="Justify"
+            >
+              <AlignJustify className="w-4 h-4" />
+            </ToolbarButton>
+            
+            <ToolbarSeparator />
+            
+            {/* Lists */}
+            <ToolbarButton
+              onClick={() => handleFormat('bulleted-list', 'block')}
+              isActive={isBlockActive(editor, 'bulleted-list')}
+              title="Bullet List"
+            >
+              <List className="w-4 h-4" />
+            </ToolbarButton>
+            <ToolbarButton
+              onClick={() => handleFormat('numbered-list', 'block')}
+              isActive={isBlockActive(editor, 'numbered-list')}
+              title="Numbered List"
+            >
+              <ListOrdered className="w-4 h-4" />
+            </ToolbarButton>
+            
+            <ToolbarSeparator />
+            
+            {/* Block Elements */}
+            <ToolbarButton
+              onClick={() => handleFormat('block-quote', 'block')}
+              isActive={isBlockActive(editor, 'block-quote')}
+              title="Quote"
+            >
+              <Quote className="w-4 h-4" />
+            </ToolbarButton>
+            <ToolbarButton
+              onClick={() => handleFormat('code-block', 'block')}
+              isActive={isBlockActive(editor, 'code-block')}
+              title="Code Block"
+            >
+              <Code className="w-4 h-4" />
+            </ToolbarButton>
+            <ToolbarButton
+              onClick={() => insertDivider(editor)}
+              title="Insert Divider"
+            >
+              <Separator className="w-4 h-4" />
+            </ToolbarButton>
+          </div>
         </div>
 
-        {/* More Options Toggle */}
-        <ToolbarButton
-          onClick={onToggleMoreOptions}
-          isActive={showMoreOptions}
-          title="More Options"
-        >
-          <MoreHorizontal className="w-4 h-4" />
-        </ToolbarButton>
+        {/* More Options Toggle - Fixed on the right */}
+        <div className="flex-shrink-0 p-2 border-l border-gray-100">
+          <ToolbarButton
+            onClick={onToggleMoreOptions}
+            isActive={showMoreOptions}
+            title="More Options"
+          >
+            <MoreHorizontal className="w-4 h-4" />
+          </ToolbarButton>
+        </div>
       </div>
 
       {/* Extended Options Row */}
       {showMoreOptions && (
-        <div className="border-t border-gray-100 p-2">
-          <div className="flex items-center space-x-1">
-            <span className="text-xs text-gray-500 font-medium mr-3">More Tools:</span>
-            
-            <ToolbarButton
-              onClick={() => {}}
-              title="Insert Link (Coming Soon)"
-              disabled
-            >
-              <Link className="w-4 h-4" />
-            </ToolbarButton>
-            <ToolbarButton
-              onClick={() => {}}
-              title="Insert Image (Coming Soon)"
-              disabled
-            >
-              <Image className="w-4 h-4" />
-            </ToolbarButton>
-            <ToolbarButton
-              onClick={() => {}}
-              title="Insert Table (Coming Soon)"
-              disabled
-            >
-              <Table className="w-4 h-4" />
-            </ToolbarButton>
-            <ToolbarButton
-              onClick={() => {}}
-              title="Text Color (Coming Soon)"
-              disabled
-            >
-              <Palette className="w-4 h-4" />
-            </ToolbarButton>
-            
-            <div className="text-xs text-gray-400 ml-4">
-              Additional features coming soon
+        <div className="border-t border-gray-100">
+          <div className="overflow-x-auto">
+            <div className="flex items-center space-x-1 p-2 min-w-max">
+              <span className="text-xs text-gray-500 font-medium mr-3 flex-shrink-0">More Tools:</span>
+              
+              <ToolbarButton
+                onClick={() => {}}
+                title="Insert Link (Coming Soon)"
+                disabled
+              >
+                <Link className="w-4 h-4" />
+              </ToolbarButton>
+              <ToolbarButton
+                onClick={() => {}}
+                title="Insert Image (Coming Soon)"
+                disabled
+              >
+                <Image className="w-4 h-4" />
+              </ToolbarButton>
+              <ToolbarButton
+                onClick={() => {}}
+                title="Insert Table (Coming Soon)"
+                disabled
+              >
+                <Table className="w-4 h-4" />
+              </ToolbarButton>
+              <ToolbarButton
+                onClick={() => {}}
+                title="Text Color (Coming Soon)"
+                disabled
+              >
+                <Palette className="w-4 h-4" />
+              </ToolbarButton>
+              
+              <div className="text-xs text-gray-400 ml-4 flex-shrink-0">
+                Additional features coming soon
+              </div>
             </div>
           </div>
         </div>
