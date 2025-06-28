@@ -81,16 +81,22 @@ function App() {
   // Show loading screen while checking authentication
   if (isLoading) {
     return (
-      <div 
-        className="h-screen flex items-center justify-center"
-        style={{
-          backgroundImage: 'url(/images/bg.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
-        <div className="text-center bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-xl">
+      <div className="h-screen flex items-center justify-center relative">
+        {/* Background with blur */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            backgroundImage: 'url(/images/bg.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            filter: 'blur(8px)',
+            transform: 'scale(1.1)' // Slightly scale to avoid blur edge artifacts
+          }}
+        />
+        
+        {/* Content overlay */}
+        <div className="relative z-10 text-center bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-xl">
           <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-gray-600">Loading...</p>
         </div>
@@ -153,99 +159,57 @@ function App() {
   };
 
   return (
-    <div 
-      className="h-screen flex"
-      style={{
-        backgroundImage: 'url(/images/bg.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      }}
-    >
-      {/* Toast Container */}
-      <ToastContainer toasts={toast.toasts} onClose={toast.removeToast} />
+    <div className="h-screen flex relative">
+      {/* Background with blur */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          backgroundImage: 'url(/images/bg.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          filter: 'blur(8px)',
+          transform: 'scale(1.1)' // Slightly scale to avoid blur edge artifacts
+        }}
+      />
+      
+      {/* Content overlay */}
+      <div className="relative z-10 w-full">
+        {/* Toast Container */}
+        <ToastContainer toasts={toast.toasts} onClose={toast.removeToast} />
 
-      {/* Main Content Container with Max Width */}
-      <div className="w-full max-w-[1800px] mx-auto flex bg-white/95 backdrop-blur-sm shadow-xl rounded-lg m-4 overflow-hidden">
-        {/* Slate Editor - Takes up 2/3 on desktop, full width on mobile */}
-        <div className={`bg-white shadow-sm border-r border-gray-200 overflow-hidden transition-opacity duration-200 ${
-          isMobileChatOpen ? 'lg:flex-[2] opacity-30 lg:opacity-100' : 'lg:flex-[2] flex-1'
-        }`}>
-          <SlateEditor
-            content={document.content}
-            selection={document.selection}
-            onContentChange={document.updateContent}
-            onSelectionChange={document.updateSelection}
-            hasSelection={!!document.selection}
-            onToggleMobileChat={toggleMobileChat}
-            selectedText={document.selection?.text ? extractPlainText(document.selection.text) : undefined}
-            onReplaceContent={handleEditorReplaceRef}
-          />
-        </div>
-
-        {/* Desktop Chat Interface - Takes up 1/3 max */}
-        <div className="hidden lg:flex lg:flex-col lg:flex-1 lg:max-w-md bg-white shadow-sm">
-          {/* Chat Header with Logout */}
-          <div className="flex-shrink-0 flex items-center justify-between p-4 border-b border-gray-200 bg-gray-50">
-            <div className="flex items-center space-x-2">
-              <MessageSquare className="w-5 h-5 text-gray-600" />
-              <h2 className="font-semibold text-gray-800">AI Assistant</h2>
-            </div>
-            <div className="flex items-center space-x-2">
-              {document.selection?.text && (
-                <div className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full border border-blue-200">
-                  Text selected
-                </div>
-              )}
-              <button
-                onClick={handleLogout}
-                className="p-1 text-gray-500 hover:text-red-500 transition-colors"
-                title="Logout"
-              >
-                <LogOut className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-          
-          {/* Chat Interface - Takes remaining height */}
-          <div className="flex-1 min-h-0">
-            <ChatInterface
-              messages={chat.messages}
-              isLoading={chat.isLoading}
-              error={chat.error}
+        {/* Main Content Container with Max Width */}
+        <div className="w-full max-w-[1800px] mx-auto flex bg-white/95 backdrop-blur-sm shadow-xl rounded-lg m-4 overflow-hidden h-[calc(100vh-2rem)]">
+          {/* Slate Editor - Takes up 2/3 on desktop, full width on mobile */}
+          <div className={`bg-white shadow-sm border-r border-gray-200 overflow-hidden transition-opacity duration-200 ${
+            isMobileChatOpen ? 'lg:flex-[2] opacity-30 lg:opacity-100' : 'lg:flex-[2] flex-1'
+          }`}>
+            <SlateEditor
+              content={document.content}
+              selection={document.selection}
+              onContentChange={document.updateContent}
+              onSelectionChange={document.updateSelection}
+              hasSelection={!!document.selection}
+              onToggleMobileChat={toggleMobileChat}
               selectedText={document.selection?.text ? extractPlainText(document.selection.text) : undefined}
-              onSendMessage={handleSendMessage}
-              onApplyChanges={handleApplyChanges}
-              onClearMessages={chat.clearMessages}
-              onClearError={chat.clearError}
+              onReplaceContent={handleEditorReplaceRef}
             />
           </div>
-        </div>
-      </div>
 
-      {/* Mobile Chat Popover */}
-      {isMobileChatOpen && (
-        <div className="lg:hidden fixed inset-0 z-50 flex items-end">
-          {/* Backdrop */}
-          <div 
-            className="absolute inset-0 bg-black bg-opacity-50"
-            onClick={toggleMobileChat}
-          />
-          
-          {/* Popover */}
-          <div className="relative w-full bg-white rounded-t-2xl shadow-2xl max-h-[80vh] flex flex-col mobile-popover">
-            {/* Popover Header */}
-            <div className="flex items-center justify-between p-4 border-b border-gray-200">
+          {/* Desktop Chat Interface - Takes up 1/3 max */}
+          <div className="hidden lg:flex lg:flex-col lg:flex-1 lg:max-w-md bg-white shadow-sm">
+            {/* Chat Header with Logout */}
+            <div className="flex-shrink-0 flex items-center justify-between p-4 border-b border-gray-200 bg-gray-50">
               <div className="flex items-center space-x-2">
                 <MessageSquare className="w-5 h-5 text-gray-600" />
                 <h2 className="font-semibold text-gray-800">AI Assistant</h2>
+              </div>
+              <div className="flex items-center space-x-2">
                 {document.selection?.text && (
                   <div className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full border border-blue-200">
                     Text selected
                   </div>
                 )}
-              </div>
-              <div className="flex items-center space-x-2">
                 <button
                   onClick={handleLogout}
                   className="p-1 text-gray-500 hover:text-red-500 transition-colors"
@@ -253,16 +217,10 @@ function App() {
                 >
                   <LogOut className="w-4 h-4" />
                 </button>
-                <button
-                  onClick={toggleMobileChat}
-                  className="p-1 text-gray-500 hover:text-gray-700 transition-colors"
-                >
-                  <X className="w-5 h-5" />
-                </button>
               </div>
             </div>
             
-            {/* Chat Content - Takes remaining height */}
+            {/* Chat Interface - Takes remaining height */}
             <div className="flex-1 min-h-0">
               <ChatInterface
                 messages={chat.messages}
@@ -273,12 +231,68 @@ function App() {
                 onApplyChanges={handleApplyChanges}
                 onClearMessages={chat.clearMessages}
                 onClearError={chat.clearError}
-                isMobile={true}
               />
             </div>
           </div>
         </div>
-      )}
+
+        {/* Mobile Chat Popover */}
+        {isMobileChatOpen && (
+          <div className="lg:hidden fixed inset-0 z-50 flex items-end">
+            {/* Backdrop */}
+            <div 
+              className="absolute inset-0 bg-black bg-opacity-50"
+              onClick={toggleMobileChat}
+            />
+            
+            {/* Popover */}
+            <div className="relative w-full bg-white rounded-t-2xl shadow-2xl max-h-[80vh] flex flex-col mobile-popover">
+              {/* Popover Header */}
+              <div className="flex items-center justify-between p-4 border-b border-gray-200">
+                <div className="flex items-center space-x-2">
+                  <MessageSquare className="w-5 h-5 text-gray-600" />
+                  <h2 className="font-semibold text-gray-800">AI Assistant</h2>
+                  {document.selection?.text && (
+                    <div className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full border border-blue-200">
+                      Text selected
+                    </div>
+                  )}
+                </div>
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={handleLogout}
+                    className="p-1 text-gray-500 hover:text-red-500 transition-colors"
+                    title="Logout"
+                  >
+                    <LogOut className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={toggleMobileChat}
+                    className="p-1 text-gray-500 hover:text-gray-700 transition-colors"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+              
+              {/* Chat Content - Takes remaining height */}
+              <div className="flex-1 min-h-0">
+                <ChatInterface
+                  messages={chat.messages}
+                  isLoading={chat.isLoading}
+                  error={chat.error}
+                  selectedText={document.selection?.text ? extractPlainText(document.selection.text) : undefined}
+                  onSendMessage={handleSendMessage}
+                  onApplyChanges={handleApplyChanges}
+                  onClearMessages={chat.clearMessages}
+                  onClearError={chat.clearError}
+                  isMobile={true}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

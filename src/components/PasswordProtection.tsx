@@ -33,16 +33,22 @@ export const PasswordProtection: React.FC<PasswordProtectionProps> = ({ onAuthen
   };
 
   return (
-    <div 
-      className="min-h-screen flex items-center justify-center p-4"
-      style={{
-        backgroundImage: 'url(/images/bg.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      }}
-    >
-      <div className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center p-4 relative">
+      {/* Background with blur */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          backgroundImage: 'url(/images/bg.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          filter: 'blur(8px)',
+          transform: 'scale(1.1)' // Slightly scale to avoid blur edge artifacts
+        }}
+      />
+      
+      {/* Content overlay */}
+      <div className="relative z-10 w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-white/90 backdrop-blur-sm rounded-full mb-4 shadow-lg">
