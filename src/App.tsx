@@ -159,7 +159,7 @@ function App() {
   };
 
   return (
-    <div className="h-screen w-screen bg-gray-100 flex relative overflow-hidden">
+    <div className="h-screen w-screen bg-gray-100 flex relative">
       {/* Background with sunset gradient fallback */}
       <div 
         className="absolute inset-0 bg-gradient-to-br from-orange-400 via-pink-500 to-purple-600"
