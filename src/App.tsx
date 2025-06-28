@@ -159,7 +159,7 @@ function App() {
   };
 
   return (
-    <div className="h-screen w-screen bg-gray-100 flex relative">
+    <div className="h-screen w-screen bg-gray-100 flex relative overflow-hidden">
       {/* Background with sunset gradient fallback */}
       <div 
         className="absolute inset-0 bg-gradient-to-br from-orange-400 via-pink-500 to-purple-600"
@@ -173,13 +173,13 @@ function App() {
         }}
       />
       
-      {/* Content overlay - Constrained container with proper viewport height */}
-      <div className="relative z-10 w-full h-full p-4 overflow-hidden">
+      {/* Content overlay - No padding, full screen */}
+      <div className="relative z-10 w-full h-full overflow-hidden">
         {/* Toast Container */}
         <ToastContainer toasts={toast.toasts} onClose={toast.removeToast} />
 
-        {/* Main Content Container - Properly constrained with calc height */}
-        <div className="w-full h-[calc(100vh-2rem)] max-w-[1800px] mx-auto flex bg-white/95 backdrop-blur-sm shadow-xl rounded-lg overflow-hidden">
+        {/* Main Content Container - Full screen with small margin */}
+        <div className="w-full h-full max-w-[1800px] mx-auto flex bg-white/95 backdrop-blur-sm shadow-xl overflow-hidden" style={{ margin: '8px auto', width: 'calc(100% - 16px)', height: 'calc(100% - 16px)' }}>
           {/* Slate Editor - Takes up 2/3 on desktop, full width on mobile */}
           <div className={`bg-white shadow-sm border-r border-gray-200 overflow-hidden transition-opacity duration-200 ${
             isMobileChatOpen ? 'lg:flex-[2] opacity-30 lg:opacity-100' : 'lg:flex-[2] flex-1'
