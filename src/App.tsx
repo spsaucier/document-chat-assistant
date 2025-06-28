@@ -165,10 +165,10 @@ function App() {
         />
       </div>
 
-      {/* Desktop Chat Interface - Takes up 1/3 max */}
-      <div className="hidden lg:block lg:flex-1 lg:max-w-md bg-white shadow-sm overflow-hidden">
+      {/* Desktop Chat Interface - Takes up 1/3 max with proper height */}
+      <div className="hidden lg:flex lg:flex-col lg:flex-1 lg:max-w-md bg-white shadow-sm">
         {/* Chat Header with Logout */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gray-50">
+        <div className="flex-shrink-0 flex items-center justify-between p-4 border-b border-gray-200 bg-gray-50">
           <div className="flex items-center space-x-2">
             <MessageSquare className="w-5 h-5 text-gray-600" />
             <h2 className="font-semibold text-gray-800">AI Assistant</h2>
@@ -189,6 +189,7 @@ function App() {
           </div>
         </div>
         
+        {/* Chat Interface - Takes remaining height */}
         <div className="flex-1 min-h-0">
           <ChatInterface
             messages={chat.messages}
@@ -242,7 +243,7 @@ function App() {
               </div>
             </div>
             
-            {/* Chat Content */}
+            {/* Chat Content - Takes remaining height */}
             <div className="flex-1 min-h-0">
               <ChatInterface
                 messages={chat.messages}
