@@ -81,7 +81,7 @@ function App() {
   // Show loading screen while checking authentication
   if (isLoading) {
     return (
-      <div className="h-screen flex items-center justify-center relative">
+      <div className="h-screen w-screen flex items-center justify-center relative overflow-hidden">
         {/* Background with sunset gradient fallback */}
         <div 
           className="absolute inset-0 bg-gradient-to-br from-orange-400 via-pink-500 to-purple-600"
@@ -159,7 +159,7 @@ function App() {
   };
 
   return (
-    <div className="h-screen flex flex-col relative">
+    <div className="h-screen w-screen bg-gray-100 flex relative overflow-hidden">
       {/* Background with sunset gradient fallback */}
       <div 
         className="absolute inset-0 bg-gradient-to-br from-orange-400 via-pink-500 to-purple-600"
@@ -173,13 +173,13 @@ function App() {
         }}
       />
       
-      {/* Content overlay - Full height flex container */}
-      <div className="relative z-10 flex-1 flex flex-col p-4">
+      {/* Content overlay - Constrained container */}
+      <div className="relative z-10 w-full h-full p-4 overflow-hidden">
         {/* Toast Container */}
         <ToastContainer toasts={toast.toasts} onClose={toast.removeToast} />
 
-        {/* Main Content Container with Max Width - Flex container */}
-        <div className="flex-1 w-full max-w-[1800px] mx-auto flex bg-white/95 backdrop-blur-sm shadow-xl rounded-lg overflow-hidden">
+        {/* Main Content Container - Properly constrained */}
+        <div className="w-full h-[calc(100vh-2rem)] max-w-[1800px] mx-auto flex bg-white/95 backdrop-blur-sm shadow-xl rounded-lg overflow-hidden">
           {/* Slate Editor - Takes up 2/3 on desktop, full width on mobile */}
           <div className={`bg-white shadow-sm border-r border-gray-200 overflow-hidden transition-opacity duration-200 ${
             isMobileChatOpen ? 'lg:flex-[2] opacity-30 lg:opacity-100' : 'lg:flex-[2] flex-1'
@@ -197,9 +197,9 @@ function App() {
           </div>
 
           {/* Desktop Chat Interface - Takes up 1/3 max */}
-          <div className="hidden lg:flex lg:flex-col lg:flex-1 lg:max-w-md bg-white shadow-sm">
+          <div className="hidden lg:block lg:flex-1 lg:max-w-md bg-white shadow-sm overflow-hidden">
             {/* Chat Header with Logout */}
-            <div className="flex-shrink-0 flex items-center justify-between p-4 border-b border-gray-200 bg-gray-50">
+            <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gray-50">
               <div className="flex items-center space-x-2">
                 <MessageSquare className="w-5 h-5 text-gray-600" />
                 <h2 className="font-semibold text-gray-800">AI Assistant</h2>
@@ -220,7 +220,6 @@ function App() {
               </div>
             </div>
             
-            {/* Chat Interface - Takes remaining height */}
             <div className="flex-1 min-h-0">
               <ChatInterface
                 messages={chat.messages}
@@ -275,7 +274,7 @@ function App() {
                 </div>
               </div>
               
-              {/* Chat Content - Takes remaining height */}
+              {/* Chat Content */}
               <div className="flex-1 min-h-0">
                 <ChatInterface
                   messages={chat.messages}
