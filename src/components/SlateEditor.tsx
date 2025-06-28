@@ -201,6 +201,12 @@ export const SlateEditor: React.FC<SlateEditorProps> = ({
     }
   }, [editor]);
 
+  // Handle selection cleared from toolbar
+  const handleSelectionCleared = useCallback(() => {
+    console.log('🎯 Toolbar requested selection clear');
+    clearSelection();
+  }, [clearSelection]);
+
   // Check if editor is empty for placeholder
   const isEmpty = value.length === 1 && 
     value[0].type === 'paragraph' && 
@@ -223,6 +229,7 @@ export const SlateEditor: React.FC<SlateEditorProps> = ({
         editor={editor}
         showMoreOptions={showMoreOptions}
         onToggleMoreOptions={() => setShowMoreOptions(!showMoreOptions)}
+        onSelectionCleared={handleSelectionCleared}
       />
 
       {/* Editor */}

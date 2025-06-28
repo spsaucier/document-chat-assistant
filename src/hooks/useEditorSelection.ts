@@ -27,12 +27,11 @@ export const useEditorSelection = (
       isEditorFocused
     });
     
+    // Always clear selection if there's no selection or it's collapsed
     if (!editorSelection || Range.isCollapsed(editorSelection)) {
-      if (isEditorFocused) {
-        console.log('🎯 Clearing selection (no selection or collapsed)');
-        setSelectionInfo(null);
-        onSelectionChange(null);
-      }
+      console.log('🎯 Clearing selection (no selection or collapsed)');
+      setSelectionInfo(null);
+      onSelectionChange(null);
       return;
     }
 
@@ -72,23 +71,35 @@ export const useEditorSelection = (
   const handleFocus = useCallback(() => {
     console.log('🎯 Slate editor focused');
     setIsEditorFocused(true);
-    if (selectionInfo) {
-      try {
-        setTimeout(() => {
-          if (Editor.hasPath(editor, selectionInfo.range.anchor.path) && 
-              Editor.hasPath(editor, selectionInfo.range.focus.path)) {
-            editor.select(selectionInfo.range);
-          }
-        }, 10);
-      } catch (error) {
-        console.warn('⚠️ Focus selection restore error:', error);
+    
+    // Check current selection when focusing
+    const { selection: editorSelection } = editor;
+    if (editorSelection && !Range.isCollapsed(editorSelection)) {
+      // If there's a valid selection when focusing, restore it
+      if (selectionInfo) {
+        try {
+          setTimeout(() => {
+            if (Editor.hasPath(editor, selectionInfo.range.anchor.path) && 
+                Editor.hasPath(editor, selectionInfo.range.focus.path)) {
+              editor.select(selectionInfo.range);
+            }
+          }, 10);
+        } catch (error) {
+          console.warn('⚠️ Focus selection restore error:', error);
+        }
       }
+    } else {
+      // Clear selection if there's no valid selection when focusing
+      setSelectionInfo(null);
+      onSelectionChange(null);
     }
-  }, [editor, selectionInfo]);
+  }, [editor, selectionInfo, onSelectionChange]);
 
   const handleBlur = useCallback(() => {
     console.log('🎯 Slate editor blurred');
     setIsEditorFocused(false);
+    
+    // Only preserve selection if there's actually a valid selection
     if (editor.selection && !Range.isCollapsed(editor.selection)) {
       try {
         const selectedText = Editor.string(editor, editor.selection);
@@ -115,11 +126,19 @@ export const useEditorSelection = (
         });
       } catch (error) {
         console.warn('⚠️ Blur selection error:', error);
+        setSelectionInfo(null);
+        onSelectionChange(null);
       }
+    } else {
+      // Clear selection if there's no valid selection on blur
+      console.log('🎯 Clearing selection on blur (no valid selection)');
+      setSelectionInfo(null);
+      onSelectionChange(null);
     }
   }, [editor, onSelectionChange]);
 
   const clearSelection = useCallback(() => {
+    console.log('🎯 Manually clearing selection');
     setSelectionInfo(null);
     onSelectionChange(null);
   }, [onSelectionChange]);

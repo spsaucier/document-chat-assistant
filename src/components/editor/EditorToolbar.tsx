@@ -13,6 +13,7 @@ interface EditorToolbarProps {
   editor: ReactEditor;
   showMoreOptions: boolean;
   onToggleMoreOptions: () => void;
+  onSelectionCleared?: () => void; // Add callback for when selection should be cleared
 }
 
 // Helper functions
@@ -133,6 +134,7 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = ({
   editor,
   showMoreOptions,
   onToggleMoreOptions,
+  onSelectionCleared,
 }) => {
   const handleFormat = (format: string, type: 'mark' | 'block' | 'alignment') => {
     if (type === 'mark') {
@@ -142,6 +144,15 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = ({
     } else if (type === 'alignment') {
       toggleAlignment(editor, format as 'left' | 'center' | 'right' | 'justify');
     }
+    
+    // After applying formatting, clear the selection state
+    // This ensures the UI updates to reflect that no text is selected
+    setTimeout(() => {
+      if (onSelectionCleared) {
+        onSelectionCleared();
+      }
+    }, 100);
+    
     ReactEditor.focus(editor);
   };
 
