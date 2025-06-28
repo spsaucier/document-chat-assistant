@@ -6,7 +6,7 @@ interface PasswordProtectionProps {
 }
 
 // Simple password - in a real app, this would be more secure
-const CORRECT_PASSWORD = 'document2024';
+const CORRECT_PASSWORD = 'document-ai';
 
 export const PasswordProtection: React.FC<PasswordProtectionProps> = ({ onAuthenticated }) => {
   const [password, setPassword] = useState('');
