@@ -4,7 +4,6 @@ import { FileText, Type, AlignLeft, MessageSquare } from 'lucide-react';
 interface EditorHeaderProps {
   wordCount: number;
   charCount: number;
-  hasSelection: boolean;
   selectedText?: string;
   onToggleMobileChat: () => void;
 }
@@ -12,7 +11,6 @@ interface EditorHeaderProps {
 export const EditorHeader: React.FC<EditorHeaderProps> = ({
   wordCount,
   charCount,
-  hasSelection,
   selectedText,
   onToggleMobileChat,
 }) => {
@@ -28,12 +26,6 @@ export const EditorHeader: React.FC<EditorHeaderProps> = ({
           <Type className="w-4 h-4" />
           <span>{wordCount} words, {charCount} chars</span>
         </div>
-        {hasSelection && (
-          <div className="text-sm text-gray-500 flex items-center space-x-1">
-            <AlignLeft className="w-4 h-4" />
-            <span>Text selected</span>
-          </div>
-        )}
         
         <button
           onClick={onToggleMobileChat}
