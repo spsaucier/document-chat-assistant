@@ -81,8 +81,16 @@ function App() {
   // Show loading screen while checking authentication
   if (isLoading) {
     return (
-      <div className="h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
+      <div 
+        className="h-screen flex items-center justify-center"
+        style={{
+          backgroundImage: 'url(/images/bg.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <div className="text-center bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-xl">
           <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-gray-600">Loading...</p>
         </div>
@@ -145,12 +153,20 @@ function App() {
   };
 
   return (
-    <div className="h-screen bg-gray-100 flex">
+    <div 
+      className="h-screen flex"
+      style={{
+        backgroundImage: 'url(/images/bg.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
       {/* Toast Container */}
       <ToastContainer toasts={toast.toasts} onClose={toast.removeToast} />
 
       {/* Main Content Container with Max Width */}
-      <div className="w-full max-w-[1800px] mx-auto flex bg-white shadow-lg">
+      <div className="w-full max-w-[1800px] mx-auto flex bg-white/95 backdrop-blur-sm shadow-xl rounded-lg m-4 overflow-hidden">
         {/* Slate Editor - Takes up 2/3 on desktop, full width on mobile */}
         <div className={`bg-white shadow-sm border-r border-gray-200 overflow-hidden transition-opacity duration-200 ${
           isMobileChatOpen ? 'lg:flex-[2] opacity-30 lg:opacity-100' : 'lg:flex-[2] flex-1'
